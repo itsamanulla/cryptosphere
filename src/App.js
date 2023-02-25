@@ -1,25 +1,25 @@
-import logo from './logo.svg';
+import React from 'react'
+import { useGetCoinsQuery } from './services/cryptoApi'
+import CryptoCards from './components/CryptoCards';
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import Home from './components/Home';
+import MainPage from './components/MainPage';
 import './App.css';
-
-function App() {
+import CoinDetail from './components/CoinDetail';
+import Error from './components/Error';
+const App = () => {
+  const { data, isLoading, error } = useGetCoinsQuery();
+  // console.log(data);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Router>
+        <Routes>         
+          <Route exact path="/" element={<MainPage />} />
+          <Route exact path="/crypto/:coinId" element={<CoinDetail />} />
+          <Route path='*' element={<Error />} />
+        </Routes></Router>
+    </>
+  )
 }
 
-export default App;
+export default App
